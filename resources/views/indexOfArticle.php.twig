@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Articles</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost/blog/resources/views/dist/css/Lobibox.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://localhost/blog/resources/views/dist/js/Lobibox.min.js"></script>  
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Articles</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#">Home</a></li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container">
+  <h3>New Article</h3>
+  <hr>
+  <div class="row">
+          <form id="formNewArticle" action="#">
+            <div class="form-group">
+              <label for="description">Description :</label>
+              <textarea class="form-control" rows="5" name="description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>
+  </div>
+  <hr />
+  <div id="articleContent"></div>
+  
+  
+  <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Article</h4>
+              </div>
+              <div class="modal-body">
+                 <form id="articleFormUpdate" action="#">
+                    <div class="form-group">
+                      <label for="email"></label>
+                      <input type="hidden" class="form-control" id="article_id" name="id">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Article : </label>
+                      <textarea class="form-control" row="5" id="desc_id" name="description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+</div>
+    <script>
+        $('#articleFormUpdate').on('submit', function(e){
+            e.preventDefault();
+            var data=$('#desc_id').val(), key=$('#article_id').val();
+            $.ajax({
+                                url: 'http://localhost/blog/public/articles/'+key,
+                                type: 'PUT',
+                                data: { data: data },
+                                success: function(msg){
+                                    var x=JSON.parse(msg);
+                                    if (x.status == 1){
+                                        Lobibox.notify('success', {
+                                            msg: x.message,
+                                            sound: false
+                                        });
+                                        getArticle();
+                                    } else {
+                                        Lobibox.notify('error', {
+                                            msg: x.message,
+                                            sound: false
+                                        });
+                                    }                                    
+                                },
+                                error: function(){
+                                    error('Error Link Destination!');
+                                }
+                            });        
+        });
+        
+        function sukses(string){            
+                Lobibox.notify('success', {
+                    sound: false,
+                    msg: string
+                });
+        }
+        function error(string){            
+                Lobibox.notify('error', {
+                    sound: false,
+                    msg: string
+                });
+        }
+        function articleLayout(id, description)
+        {
+            var html  = '<div class="col-xs-12">';
+                html +=        '<h2>Article ID # '+id+'</h2>';
+                html +=        '<p id="article_'+id+'">';
+                html +=            description;
+                html +=        '</p>';
+                html +=        '<div class="text-center">';
+                html +=            '<button id="u_'+id+'" class="updateArticle"><span class="glyphicon glyphicon-pencil"></span> Update </button>';
+                html +=            '<button id="c_'+id+'" class="comments"><span class="glyphicon glyphicon-comment"></span> See Comments </button>';
+                html +=            '<button id="d_'+id+'" class="removeArticle"><span class="glyphicon glyphicon-remove"></span> Remove</button>';
+                html +=        '</div>';
+                html +=    '</div>';
+                html += '<div class="col-md-12"><div id="com_'+id+'" class="collapse">';
+                html +=     '<form id="formAddComment_'+id+'">';
+                html +=                '<div class="form-group">';
+                html +=                  '<label for="addComment">Comment : </label>';
+                html +=                  '<input required="" type="text" class="form-control" id="addComment_'+id+'" name="description">';
+                html +=                '</div>';
+                html +=                '<button id="btnC_'+id+'" type="submit" class="btn btn-primary sendComment">Send</button>';
+                html +=     '</form><hr/>';
+                html += '<div id="listComment_'+id+'"></div>';
+                html += '</div></div>';
+            return html;
+        }
+        $(document).on('click','.comments',function(){
+            var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
+            $('#com_'+key).collapse('toggle');
+            $.get('http://localhost/blog/public/comments/commentsBy?id='+key, function(msg){
+                var x = JSON.parse(msg);
+                var html='';
+                $.each(x, function(k,v){
+                    html += '<p>'+x[k].description+'</p>';
+                });
+                $('#listComment_'+key).empty();
+                $('#listComment_'+key).append(html).html();
+            });
+        });
+        $(document).on('click','.updateArticle',function(){
+            var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
+            $('#article_id').val(key);
+            $('#desc_id').val($('#article_'+key).text());
+            $('#myModal').modal('show');
+        });
+        $(document).on('click','.removeArticle',function(){
+            var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
+            Lobibox.confirm({
+                    msg: "Are you sure you want to DELETE this article?",
+                    callback: function ($this, type) {
+                        if (type === 'yes') {
+                            $.ajax({
+                                url: 'http://localhost/blog/public/articles/'+key,
+                                type: 'DELETE',
+                                success: function(msg){
+                                    if (msg == '1'){
+                                        Lobibox.notify('success', {
+                                            msg: 'Article Deleted!',
+                                            sound: false
+                                        });
+                                        getArticle();
+                                    } else {
+                                        error('ID Not Found!');
+                                    }                                    
+                                },
+                                error: function(){
+                                    error('Error Link Destination!');
+                                }
+                            });                            
+                        } else if (type === 'no') {
+                            Lobibox.notify('info', {
+                                msg: 'You have clicked "No" button.',
+                                sound: false
+                            });
+                        }
+                    }                    
+            });
+        });
+        $(document).on('click','.sendComment',function(e){
+            e.preventDefault();
+            var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
+            var description=$('#addComment_'+key).val();
+            $.post('http://localhost/blog/public/comments/', { idArt: key, description: description}, function(msg){
+                var x = JSON.parse(msg);
+                if (x.status == 1){
+                    $('#listComment_'+key).append(x.description).show('slow');
+                    sukses(x.description+' berhasil masuk!');
+                } else {
+                    error(x.description);
+                }                
+            });
+        });
+        function getArticle()
+        {
+            $.get('http://localhost/blog/public/articles/allArticle', function(msg){
+                x = JSON.parse(msg);
+                html = '';
+                $.each(x, function(k, v){
+                    html += articleLayout(x[k].id, x[k].description);
+                });
+                $('#articleContent').empty();
+                $('#articleContent').append(html).html();
+            });
+        }
+        $(document).ready(function(){
+            getArticle();
+        });
+        $('#formNewArticle').on('submit', function(e){
+            e.preventDefault();
+            var data=$('#formNewArticle').serialize();
+            $.post('http://localhost/blog/public/articles/', data, function(msg){
+                data = JSON.parse(msg);
+                if (data.status == 1){
+                    sukses(data.message);
+                    getArticle();
+                }else{
+                    error(data.message);
+                }                
+            });
+        });
+    </script>
+</body>
+</html>
