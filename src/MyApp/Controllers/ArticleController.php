@@ -24,7 +24,7 @@ class ArticleController {
     }
     public function edit($id){
         
-        return 'Edit ?'.$id;
+        return 'Edit by Branch 1?'.$id;
     }
 
     public function show($id){
