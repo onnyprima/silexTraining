@@ -24,7 +24,7 @@ class ArticleController {
     }
     public function edit($id){
         
-        return $id;
+        return 'Edit ?'.$id;
     }
 
     public function show($id){
