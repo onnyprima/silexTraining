@@ -22,9 +22,9 @@ class ArticleController {
     {
         return $this->articleModel->allArticle($app);
     }
-    public function edit($id){
-        
-        return $id;
+    public function edit($id)
+    {    
+        return 'Edit by Branch 2?'.$id;
     }
 
     public function show($id){
