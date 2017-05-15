@@ -23,8 +23,8 @@ class ArticleController {
         return $this->articleModel->allArticle($app);
     }
 
-    public function edit($id){
-        
+    public function edit($id)
+    {        
         return 'Edit by Branch 1?'.$id;
     }
 
