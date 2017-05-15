@@ -22,6 +22,7 @@ class ArticleController {
     {
         return $this->articleModel->allArticle($app);
     }
+    
     public function edit($id){
         
         return $id;
