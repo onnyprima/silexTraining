@@ -27,6 +27,10 @@ class ArticleController {
     {
         return 'Saya fungsi dari cabangmalang';
     }
+    public function fcm()
+    {
+        return 'fcm';
+    }
     
     public function edit($id)
     {    
