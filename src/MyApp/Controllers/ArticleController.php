@@ -29,7 +29,7 @@ class ArticleController {
     }
     public function fcm()
     {
-        return 'fcm';
+        return 'fcmemmm';
     }
     
     public function edit($id)
