@@ -40,6 +40,11 @@ class ArticleController {
 	return 'Ini fungsi dari clone diedit origin';
     }
 	
+    public function testCancelCommit()
+    {
+        return 'Should be Cancel Commit';
+    }
+    
     public function testKeClone()
     {
         return 'Test Clone Repo';
