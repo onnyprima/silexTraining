@@ -35,10 +35,10 @@ class ArticleController {
 //>>>>>>> cabangsurabaya
     }
     
-	public function fungsiFromClone()
-	{
-		return 'Ini fungsi dari clone';
-	}
+    public function fungsiFromClone()
+    {
+	return 'Ini fungsi dari clone diedit origin';
+    }
 	
     public function testKeClone()
     {
