@@ -23,9 +23,14 @@ class ArticleController {
         return $this->articleModel->allArticle($app);
     }
 
+    public function functionFromCabangSurabaya()
+    {
+        return 'Saya fungsi dari cabang surabaya';
+    }
+    
     public function edit($id)
     {    
-        return 'Edit by Branch 2?'.$id;
+        return $id;
     }
 
     public function show($id){
