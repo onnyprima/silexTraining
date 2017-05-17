@@ -35,6 +35,10 @@ class ArticleController {
 //>>>>>>> cabangsurabaya
     }
     
+    public function testKeClone()
+    {
+        return 'Test Clone Repo';
+    }
     public function edit($id)
     {    
         return $id;
