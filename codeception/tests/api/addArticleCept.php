@@ -16,16 +16,16 @@ $I->seeResponseIsJson();
 $I->seeResponseContains('{"status":1,"message":"Transaksi Berhasil !"}');
 
 //delete aricle
-$I->sendDELETE('http://localhost/blog/public/articles/65');
+$I->sendDELETE('http://localhost/blog/public/articles/52');
 $I->seeResponseContains('1');
 
 //put article saat sesuai
-$I->sendPUT('http://localhost/blog/public/articles/69', ['data' => 'ajhdsjkahjksdhajhsdkha ajhsdjkahsjkdhajkhsdkj akjhsdjkahskjdhkajhsd kahsdjahskdhajkhsdjasdh sjadkahsjkdhakjhsdjkhajkhsdkjhajkhsdk']);
+$I->sendPUT('http://localhost/blog/public/articles/52', ['data' => 'ajhdsjkahjksdhajhsdkha ajhsdjkahsjkdhajkhsdkj akjhsdjkahskjdhkajhsd kahsdjahskdhajkhsdjasdh sjadkahsjkdhakjhsdjkhajkhsdkjhajkhsdk']);
 $I->seeResponseIsJson();
 $I->seeResponseContains('{"status":1,"message":"Article 69Was Updated!"}');
 
 //put article saat tidak sesuai
-$I->sendPUT('http://localhost/blog/public/articles/69', ['data' => '']);
+$I->sendPUT('http://localhost/blog/public/articles/52', ['data' => '']);
 $I->seeResponseIsJson();
 $I->seeResponseContains('{"status":0,"message":"[description] This value should not be blank."}');
 
