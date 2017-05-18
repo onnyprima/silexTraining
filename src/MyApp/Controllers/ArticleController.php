@@ -81,7 +81,7 @@ class ArticleController {
         if (count($errors) > 0){
             $message['status'] = 0;
             foreach ($errors  as $error) {
-                    $message['message'] .= '<p>'.$error->getPropertyPath().'=>'.$error->getMessage().'</p>';
+                    $message['message'] .= $error->getPropertyPath().' '.$error->getMessage();
             }
         }else{
             
@@ -95,6 +95,10 @@ class ArticleController {
             $message['message'] = 'Transaksi Berhasil !';
         }
         header('Content-Type:application/json');
+        $pesan = array(
+            'status' => 0,
+            'message' => 'This value is too short. It should have 50 characters or more.'
+        );
         return json_encode($message);
     }
     
@@ -126,7 +130,7 @@ class ArticleController {
             );
             if (count($errors)>0){
                 foreach ($errors as $error){
-                    $errorCode .= $error->getPropertyPath().' '.$error->getMessage().'\n';
+                    $errorCode .= $error->getPropertyPath().' '.$error->getMessage();
                 }
                 $response['status'] = 0;
                 $response['message'] = $errorCode;

@@ -4,7 +4,8 @@
         "twig/twig": "^1.33",
         "dflydev/doctrine-orm-service-provider": "~2.0",
         "symfony/validator": "^3.2",
-        "symfony/security-csrf": "^3.2"
+        "symfony/security-csrf": "^3.2",
+		"codeception/codeception": "*"
     },
     "autoload": {
         "psr-4": {
