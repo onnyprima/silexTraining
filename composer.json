@@ -10,7 +10,8 @@
     "autoload": {
         "psr-4": {
             "src\\":"src/",
-            "MyEntity\\":"src/MyApp/Entity/"
+            "MyEntity\\":"src/MyApp/Entity/",
+			"codeception\\":"codeception/"
         }
     }
 }

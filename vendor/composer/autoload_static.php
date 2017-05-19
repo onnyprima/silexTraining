@@ -25,6 +25,10 @@ class ComposerStaticInit6f90734627ba8dbad79ebb7c916477a9
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'c' => 
+        array (
+            'codeception\\' => 12,
+        ),
         'W' => 
         array (
             'Webmozart\\Assert\\' => 17,
@@ -99,6 +103,10 @@ class ComposerStaticInit6f90734627ba8dbad79ebb7c916477a9
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'codeception\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/codeception',
         ),
         'Webmozart\\Assert\\' => 
         array (

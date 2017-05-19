@@ -8,19 +8,22 @@ use src\MyApp\Models\ArticleModel;
 class ArticleController {
 
     protected $articleModel;
-    
-    public function __construct() {
+    public $cbSurabaya;
+    protected $app;
+
+    public function __construct(Application $ap) {
+        $this->app = $ap;
         $this->articleModel = new ArticleModel();
     } 
     
-    public function index(Application $app){
+    public function index(){
         
-        return $app['twig']->render('indexOfArticle.php.twig');
+        return $this->app['twig']->render('indexOfArticle.php.twig');
     }
     
-    public function getAllArticle(Application $app)
+    public function getAllArticle()
     {
-        return $this->articleModel->allArticle($app);
+        return $data = $this->articleModel->allArticle($this->app);
     }
 
 //<<<<<<< HEAD
@@ -31,7 +34,7 @@ class ArticleController {
     }
     public function functionFromCabangSurabaya()
     {
-        return 'Saya fungsi dari cabang surabaya';
+        return FALSE;        
 //>>>>>>> cabangsurabaya
     }
     
@@ -58,7 +61,7 @@ class ArticleController {
         return $id;
     }
 
-    public function store(Application $app){
+    public function store(){
         
         $newArticle = array (
             'description' => $_POST['description']
@@ -71,7 +74,7 @@ class ArticleController {
                 )
         ));
         
-        $errors = $app['validator']->validate($newArticle, $constraint);
+        $errors = $this->app['validator']->validate($newArticle, $constraint);
         
         $message=array(
             'status' => 1,
@@ -87,7 +90,7 @@ class ArticleController {
             
             $article = new \src\MyApp\Entity\Article();
             $article->setDescription($newArticle['description']);
-            $entityManager = $app['orm.em'];
+            $entityManager = $this->app['orm.em'];
 
             $entityManager->persist($article);
             $entityManager->flush();
@@ -102,7 +105,7 @@ class ArticleController {
         return json_encode($message);
     }
     
-    public function update(Application $app, $id){
+    public function update($id){
         parse_str(file_get_contents("php://input"),$post_vars);
         
         $updateData = array (
@@ -120,7 +123,7 @@ class ArticleController {
             )
         ));
         
-            $errors = $app['validator']->validate($updateData, $constrains);
+            $errors = $this->app['validator']->validate($updateData, $constrains);
 
             $errorCode = '';
 
@@ -135,7 +138,7 @@ class ArticleController {
                 $response['status'] = 0;
                 $response['message'] = $errorCode;
             }else{
-                $entityManager = $app['orm.em'];
+                $entityManager = $this->app['orm.em'];
         
                 $article = $entityManager->find('src\MyApp\Entity\Article', $id);        
                 $article->setDescription($post_vars['data']);
@@ -149,9 +152,9 @@ class ArticleController {
         return json_encode($response);
     }
 
-    public function destroy(Application $app, $id){
+    public function destroy($id){
         
-        $entityManager = $app['orm.em'];
+        $entityManager = $this->app['orm.em'];
         
         $comments = $entityManager->createQueryBuilder()
                 ->select('comment')

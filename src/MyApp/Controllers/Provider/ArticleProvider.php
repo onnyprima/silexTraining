@@ -3,28 +3,32 @@ namespace src\MyApp\Controllers\Provider;
 
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
-
-require '/../ArticleController.php';
+use src\MyApp\Controllers\ArticleController;
 
 class ArticleProvider implements ControllerProviderInterface{
 
     public function connect(Application $app)
     {
         $controllers = $app["controllers_factory"];
-
-        $controllers->get("/", "src\\MyApp\\Controllers\\ArticleController::index");
         
-        $controllers->get("/allArticle", "src\\MyApp\\Controllers\\ArticleController::getAllArticle");
+        $app['controller.index'] = function() use ($app) {
+            //print_r($app);
+            return new ArticleController($app);
+        };
+           
+        $controllers->get("/", "controller.index:index");
         
-        $controllers->post("/", "src\\MyApp\\Controllers\\ArticleController::store");
+        $controllers->get("/allArticle", "controller.index:getAllArticle");
+        
+        $controllers->post("/", "controller.index:store");
 
-        $controllers->get("/{id}", "src\\MyApp\\Controllers\\ArticleController::show");
+        $controllers->get("/{id}", "controller.index:show");
 
-        $controllers->get("/edit/{id}", "src\\MyApp\\Controllers\\ArticleController::edit");
+        $controllers->get("/edit/{id}", "controller.index:edit");
 
-        $controllers->put("/{id}", "src\\MyApp\\Controllers\\ArticleController::update");
+        $controllers->put("/{id}", "controller.index:update");
 
-        $controllers->delete("/{id}", "src\\MyApp\\Controllers\\ArticleController::destroy"); 
+        $controllers->delete("/{id}", "controller.index:destroy"); 
 
         return $controllers;
     }

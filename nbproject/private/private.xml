@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/blog/public/index.php</file>
             <file>file:/C:/xampp/htdocs/blog/src/MyApp/Controllers/ArticleController.php</file>
+            <file>file:/C:/xampp/htdocs/blog/resources/views/indexOfArticle.php.twig</file>
         </group>
     </open-files>
 </project-private>
