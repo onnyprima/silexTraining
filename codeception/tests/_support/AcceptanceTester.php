@@ -20,7 +20,19 @@ class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @Given Saya Harus pergi ke halaman index
+     */
+    public function sayaHarusPergiKeHalamanIndex(){
+        //throw new \Codeception\Exception\Incomplete("Step `Saya Harus pergi ke halaman index` is not defined");
+        $this->amOnPage('http://localhost/blog/public/articles/');
+    }
+    /**
+     * @Then Seharusnya saya melihat judul halaman `New Article`
+     */
+    public function seharusnyaSayaMelihatJudulHalamanNewArticle()
+    {
+        //throw new \Codeception\Exception\Incomplete("Step `Seharusnya saya melihat judul halaman `New Article`");
+        $this->see('New Article');
+    }
 }
