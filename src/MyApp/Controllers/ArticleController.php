@@ -8,9 +8,12 @@ use src\MyApp\Models\ArticleModel;
 class ArticleController {
 
     protected $articleModel;
-    public $cbSurabaya;
     protected $app;
-
+    
+    public $cbSurabaya;
+    public $description;
+    public $id;
+    
     public function __construct(Application $ap) {
         $this->app = $ap;
         $this->articleModel = new ArticleModel();
@@ -23,7 +26,7 @@ class ArticleController {
     
     public function getAllArticle()
     {
-        return $data = $this->articleModel->allArticle($this->app);
+        return $this->articleModel->allArticle($this->app);        
     }
 
 //<<<<<<< HEAD
@@ -63,9 +66,14 @@ class ArticleController {
 
     public function store(){
         
+        if (isset($_POST['description'])){
+            $this->description = $_POST['description'];
+        }
+        
         $newArticle = array (
-            'description' => $_POST['description']
+            'description' => $this->description
         );
+        
         $constraint = new \Symfony\Component\Validator\Constraints\Collection(array(
             'description' => array(
                 new \Symfony\Component\Validator\Constraints\Length(array('min'=> 50),
@@ -87,30 +95,32 @@ class ArticleController {
                     $message['message'] .= $error->getPropertyPath().' '.$error->getMessage();
             }
         }else{
-            
-            $article = new \src\MyApp\Entity\Article();
-            $article->setDescription($newArticle['description']);
-            $entityManager = $this->app['orm.em'];
-
-            $entityManager->persist($article);
-            $entityManager->flush();
-            
-            $message['message'] = 'Transaksi Berhasil !';
+            $this->articleModel->saveArticle($this->app, $newArticle['description']);
+            $message['message'] = 'Transaksi Berhasil !';            
         }
+        
         header('Content-Type:application/json');
+        
         $pesan = array(
             'status' => 0,
             'message' => 'This value is too short. It should have 50 characters or more.'
         );
+        
         return json_encode($message);
     }
     
     public function update($id){
+        
+        $this->id = $id;
         parse_str(file_get_contents("php://input"),$post_vars);
         
+        if (isset($post_vars['data'])){
+            $this->description = $post_vars['data'];
+        }
+        
         $updateData = array (
-            'id' => $id,
-            'description' => $post_vars['data']
+            'id' => $this->id,
+            'description' => $this->description
         );
         
         $constrains = new Assert\Collection(array(
@@ -141,7 +151,7 @@ class ArticleController {
                 $entityManager = $this->app['orm.em'];
         
                 $article = $entityManager->find('src\MyApp\Entity\Article', $id);        
-                $article->setDescription($post_vars['data']);
+                $article->setDescription($updateData['description']);
 
                 $entityManager->persist($article);
                 $entityManager->flush();
@@ -154,26 +164,30 @@ class ArticleController {
 
     public function destroy($id){
         
-        $entityManager = $this->app['orm.em'];
-        
-        $comments = $entityManager->createQueryBuilder()
-                ->select('comment')
-                ->from('src\MyApp\Entity\Comment', 'comment')
-                ->where('comment.article = :id ')
-                ->setParameter('id', $id)
-                ->getQuery()
-                ->execute();
-        
-        foreach ($comments as $comment){
-                $entityManager->remove($comment);
-                $entityManager->flush();
+        if ($id != ''){
+            $entityManager = $this->app['orm.em'];
+
+            $comments = $entityManager->createQueryBuilder()
+                    ->select('comment')
+                    ->from('src\MyApp\Entity\Comment', 'comment')
+                    ->where('comment.article = :id ')
+                    ->setParameter('id', $id)
+                    ->getQuery()
+                    ->execute();
+
+            foreach ($comments as $comment){
+                    $entityManager->remove($comment);
+                    $entityManager->flush();
+            }
+
+            $article = $entityManager->find('src\MyApp\Entity\Article', $id);
+            $entityManager->remove($article);
+            $entityManager->flush();
+            
+            return '1';
+        }else{
+            return '0';
         }
-        
-        $article = $entityManager->find('src\MyApp\Entity\Article', $id);
-        $entityManager->remove($article);
-        $entityManager->flush();
-        
-        return '1';
     }
 }
 /* 

@@ -1,13 +1,10 @@
 <?php
 require __DIR__.'/../../../vendor/autoload.php';
-
 require '../src/MyApp/Controllers/ArticleController.php';
 require '../src/MyApp/Models/ArticleModel.php';
 
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
-
 use Silex\Application;
-
 use src\MyApp\Controllers\ArticleController;
 
 class blogTest extends \PHPUnit_Framework_TestCase
@@ -23,6 +20,9 @@ class blogTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $this->app->register(new \Silex\Provider\ValidatorServiceProvider());
+        $this->app->register(new \Silex\Provider\ServiceControllerServiceProvider());
+        
         $this->app->register(
                 new Silex\Provider\DoctrineServiceProvider(),
                 [
@@ -63,21 +63,33 @@ class blogTest extends \PHPUnit_Framework_TestCase
     // tests
     public function testfunctionFromCabangSurabaya()
     {
-        $test = new ArticleController($this->app);
-        
+        $test = new ArticleController($this->app);        
         $this->assertFalse($test->functionFromCabangSurabaya());        
     }
     
     public function testGetAllArticle()
     {
         $articles = new ArticleController($this->app);
-        $this->assertTrue($articles->getAllArticle());
+        $this->assertJson($articles->getAllArticle());
+    }
+    
+    public function testStore()
+    {
+        $articles = new ArticleController($this->app);
+        $articles->description = "Test";
+        $this->assertJson($articles->store());
+    }
+    
+    public function testUpdate()
+    {
+        $article = new ArticleController($this->app);
+        $article->description = "Test Update";
+        $this->assertJson($article->update('65'));
     }
     
     public function testDeleteArticle()
     {
-        //$article = new ArticleController($this->app);
-        //$article->show('55');
-        //$this->assertFalse($article);
+        $article = new ArticleController($this->app);
+        $this->assertContains('0', [$article->destroy('')]); //jika id kosong
     }
 }

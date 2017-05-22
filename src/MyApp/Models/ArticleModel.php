@@ -22,6 +22,16 @@ class ArticleModel {
         header('Content-Type:application/json');
         return json_encode($all);    
     }
+    
+    public function saveArticle(Application $app, $description)
+    {
+        $article = new \src\MyApp\Entity\Article();
+        $article->setDescription($description);
+        $entityManager = $app['orm.em'];
+
+        $entityManager->persist($article);
+        $entityManager->flush();        
+    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.
