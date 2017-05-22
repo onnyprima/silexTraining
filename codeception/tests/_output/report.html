@@ -209,13 +209,13 @@
  <body>
    <ul id="toolbar-filter">
      <li> <a href="#" title="Show all" onClick="showAllScenarios()">◯</a></li>
-     <li> <a href="#" title="Successful" onClick="toggleScenarios('scenarioSuccess', this.parentElement)"><strong>✔</strong> 2</a></li>
+     <li> <a href="#" title="Successful" onClick="toggleScenarios('scenarioSuccess', this.parentElement)"><strong>✔</strong> 9</a></li>
      <li> <a href="#" title="Failed" onClick="toggleScenarios('scenarioFailed', this.parentElement)"><strong>✗</strong> 0</a></li>
      <li> <a href="#" title="Skipped" onClick="toggleScenarios('scenarioSkipped', this.parentElement)"><strong>S</strong> 0</a></li>
      <li> <a href="#" title="Incomplete" onClick="toggleScenarios('scenarioIncomplete', this.parentElement)"><strong>I</strong> 0</a></li>
    </ul>
  <div class="layout">
- <h1>Codeception Results <small><span style="color: green">OK</span> (1.6s)</small></h1>
+ <h1>Codeception Results <small><span style="color: green">OK</span> (1.7s)</small></h1>
 
 
 
@@ -227,7 +227,7 @@
 </tr>   <tr class="scenarioRow scenarioSuccess">
     <td>
      <p class="scenarioSuccess" onclick="showHide('1', this)"><span class="toggle">+</span>
-          <span class="quiet">BlogCept &raquo;</span> Perform actions and see result <span style="color: #34495e; font-size: 70%;">0.42s</span></p>
+          <span class="quiet">BlogCept &raquo;</span> Perform actions and see result <span style="color: #34495e; font-size: 70%;">0.35s</span></p>
     </td>
    </tr>
    <tr class="scenarioRow scenarioSuccess">
@@ -270,19 +270,93 @@
    </tr>
 
 
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('2', this)"><span class="toggle">+</span>
+          <span class="quiet">Homepage &raquo;</span> try homepage <span style="color: #34495e; font-size: 70%;">0.14s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer2">
+
+
+      <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;<strong> In order to see Articles</strong></td>
+      </tr>
+
+      <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;<strong> As a Pengunjung</strong></td>
+      </tr>
+
+      <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;<strong> I need to Go to Articles Page</strong></td>
+      </tr>
+
+<tr>
+ <td class="stepName " ><p onclick="showHide('59227ffae4d92', this)"><span class="toggle">+</span> saya harus pergi ke halaman index </p>
+
+     </td>
+</tr>
+<tr>
+ <td class="nostyle">
+  <table border="0" width="100%" class="substeps scenarioStepsTable" id="stepContainer59227ffae4d92">
+          <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;<strong></strong></td>
+      </tr>
+
+      <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I am on page <span style="color: #732E81">&quot;http://localhost/blog/public/articles/&quot;</span></td>
+      </tr>
+
+
+  </table>
+ </td>
+</tr>
+<tr>
+ <td class="stepName " ><p onclick="showHide('59227ffae517a', this)"><span class="toggle">+</span> seharusnya saya melihat judul halaman `new article` </p>
+
+     </td>
+</tr>
+<tr>
+ <td class="nostyle">
+  <table border="0" width="100%" class="substeps scenarioStepsTable" id="stepContainer59227ffae517a">
+          <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;<strong></strong></td>
+      </tr>
+
+      <tr>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I see <span style="color: #732E81">&quot;New Article&quot;</span></td>
+      </tr>
+
+
+  </table>
+ </td>
+</tr>
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
 <tr>
  <td>
      <h3>Api Tests</h3>
  </td>
 </tr>   <tr class="scenarioRow scenarioSuccess">
     <td>
-     <p class="scenarioSuccess" onclick="showHide('2', this)"><span class="toggle">+</span>
-          <span class="quiet">AddArticleCept &raquo;</span> Perform actions and see result <span style="color: #34495e; font-size: 70%;">1.17s</span></p>
+     <p class="scenarioSuccess" onclick="showHide('3', this)"><span class="toggle">+</span>
+          <span class="quiet">AddArticleCept &raquo;</span> Perform actions and see result <span style="color: #34495e; font-size: 70%;">0.95s</span></p>
     </td>
    </tr>
    <tr class="scenarioRow scenarioSuccess">
     <td>
-     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer2">
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer3">
 
 
       <tr>
@@ -318,7 +392,7 @@
       </tr>
 
       <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send delete <span style="color: #732E81">&quot;http://localhost/blog/public/articles/65&quot;</span></td>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send delete <span style="color: #732E81">&quot;http://localhost/blog/public/articles/52&quot;</span></td>
       </tr>
 
       <tr>
@@ -326,7 +400,7 @@
       </tr>
 
       <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send put <span style="color: #732E81">&quot;http://localhost/blog/public/articles/69&quot;,{&quot;data&quot;:&quot;ajhdsjkahjksdhajhsdkha ajhsdjkahsjkdhajkhsdkj akjhsdjkahskjdhkajhsd kahsdjahskdhajkhsdjasdh sjadkahsjkdhakjhsdjkhajkhsdkjhajkhsdk&quot;}</span></td>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send put <span style="color: #732E81">&quot;http://localhost/blog/public/articles/65&quot;,{&quot;data&quot;:&quot;ajhdsjkahjksdhajhsdkha ajhsdjkahsjkdhajkhsdkj akjhsdjkahskjdhkajhsd kahsdjahskdhajkhsdjasdh sjadkahsjkdhakjhsdjkhajkhsdkjhajkhsdk&quot;}</span></td>
       </tr>
 
       <tr>
@@ -334,11 +408,11 @@
       </tr>
 
       <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I see response contains <span style="color: #732E81">&quot;{&quot;status&quot;:1,&quot;message&quot;:&quot;Article 69Was Updated!&quot;}&quot;</span></td>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I see response contains <span style="color: #732E81">&quot;{&quot;status&quot;:1,&quot;message&quot;:&quot;Article 65Was Updated!&quot;}&quot;</span></td>
       </tr>
 
       <tr>
-       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send put <span style="color: #732E81">&quot;http://localhost/blog/public/articles/69&quot;,{&quot;data&quot;:&quot;&quot;}</span></td>
+       <td class="stepName ">&nbsp;&nbsp;&nbsp;&nbsp;I send put <span style="color: #732E81">&quot;http://localhost/blog/public/articles/65&quot;,{&quot;data&quot;:&quot;&quot;}</span></td>
       </tr>
 
       <tr>
@@ -360,6 +434,142 @@
    </tr>
 
 
+<tr>
+ <td>
+     <h3>Unit Tests</h3>
+ </td>
+</tr>   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('4', this)">
+          <span class="quiet">Blog2Test &raquo;</span> Me <span style="color: #34495e; font-size: 70%;">0s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer4">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('5', this)">
+          <span class="quiet">BlogTest &raquo;</span> Testfunction from cabang surabaya <span style="color: #34495e; font-size: 70%;">0s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer5">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('6', this)">
+          <span class="quiet">BlogTest &raquo;</span> Get all article <span style="color: #34495e; font-size: 70%;">0.23s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer6">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('7', this)">
+          <span class="quiet">BlogTest &raquo;</span> Store <span style="color: #34495e; font-size: 70%;">0.05s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer7">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('8', this)">
+          <span class="quiet">BlogTest &raquo;</span> Update <span style="color: #34495e; font-size: 70%;">0s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer8">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <p class="scenarioSuccess" onclick="showHide('9', this)">
+          <span class="quiet">BlogTest &raquo;</span> Delete article <span style="color: #34495e; font-size: 70%;">0s</span></p>
+    </td>
+   </tr>
+   <tr class="scenarioRow scenarioSuccess">
+    <td>
+     <table border="0" width="100%" class="scenarioSuccess scenarioStepsTable" id="stepContainer9">
+
+
+
+         
+         
+         
+     </table>
+
+
+    </td>
+   </tr>
+
+
 
    <tr>
     <td>
@@ -368,7 +578,7 @@
       <table border="0">
        <tr>
         <td width="250" class="scenarioSuccess">Successful scenarios:</td>
-        <td class="scenarioSuccessValue"><strong>2</strong></td>
+        <td class="scenarioSuccessValue"><strong>9</strong></td>
        </tr>
        <tr>
         <td class="scenarioFailed">Failed scenarios:</td>

@@ -35,4 +35,11 @@ class AcceptanceTester extends \Codeception\Actor
         //throw new \Codeception\Exception\Incomplete("Step `Seharusnya saya melihat judul halaman `New Article`");
         $this->see('New Article');
     }
+    /**
+     * @Then ada button Submit
+     */
+    public function adaButtonSubmit()
+    {
+        $this->see('Submit');
+    }
 }
