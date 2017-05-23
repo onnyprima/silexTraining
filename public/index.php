@@ -7,6 +7,9 @@ use src\MyApp\Entity\Article;
 use src\MyApp\Entity\Comment;
 use src\MyApp\Controllers\Provider\ArticleProvider;
 use src\MyApp\Controllers\Provider\CommentProvider;
+use src\MyApp\Controllers\Provider\UploadProvider;
+
+use src\MyApp\Library\uploader\UploadHandler;
 
 $app = new Silex\Application();
 
@@ -53,6 +56,7 @@ $app->register(new DoctrineOrmServiceProvider(), [
 
 $app->mount("/articles", new ArticleProvider());
 $app->mount("/comments", new CommentProvider());
+$app->mount("/upload", new UploadProvider());
 
 $app['debug']=true;
 $app->run();
