@@ -20,7 +20,20 @@ class ApiTester extends \Codeception\Actor
 {
     use _generated\ApiTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @Given sendPOSTdata
+     */ 
+    public function sendPOSTdata()
+    {
+        $this->sendPOST('http://localhost/blog/public/articles/', ['description' => 'test']);
+    }
+    /**
+     * @Given melihat response JSON
+     */
+    public function melihatResponseJSON()
+    {
+        $this->seeResponseCodeIs(\Codeception\Util\HttpCode::OK); // ini 200
+        $this->seeResponseIsJson();
+        $this->seeResponseContains('{"status":0,"message":"[description] This value is too short. It should have 50 characters or more."}');        
+    }
 }
