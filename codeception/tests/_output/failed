@@ -1,0 +1,2 @@
+tests\api\addArticleCept.php
+tests\api\addArticle.feature:try addArticle

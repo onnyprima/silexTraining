@@ -2,7 +2,6 @@
 namespace src\MyApp\Controllers;
 
 use Silex\Application;
-use Symfony\Component\Validator\Constraints as Assert;
 use src\MyApp\Models\ArticleModel;
 
 class ArticleController {
@@ -69,44 +68,11 @@ class ArticleController {
         if (isset($_POST['description'])){
             $this->description = $_POST['description'];
         }
-        
         $newArticle = array (
             'description' => $this->description
-        );
+        );        
         
-        $constraint = new \Symfony\Component\Validator\Constraints\Collection(array(
-            'description' => array(
-                new \Symfony\Component\Validator\Constraints\Length(array('min'=> 50),
-                new \Symfony\Component\Validator\Constraints\NotBlank()        
-                        )
-                )
-        ));
-        
-        $errors = $this->app['validator']->validate($newArticle, $constraint);
-        
-        $message=array(
-            'status' => 1,
-            'message' => ''
-        );
-        
-        if (count($errors) > 0){
-            $message['status'] = 0;
-            foreach ($errors  as $error) {
-                    $message['message'] .= $error->getPropertyPath().' '.$error->getMessage();
-            }
-        }else{
-            $this->articleModel->saveArticle($this->app, $newArticle['description']);
-            $message['message'] = 'Transaksi Berhasil !';            
-        }
-        
-        header('Content-Type:application/json');
-        
-        $pesan = array(
-            'status' => 0,
-            'message' => 'This value is too short. It should have 50 characters or more.'
-        );
-        
-        return json_encode($message);
+        return $this->articleModel->saveArticle($this->app, $newArticle);        
     }
     
     public function update($id){
@@ -118,76 +84,12 @@ class ArticleController {
             $this->description = $post_vars['data'];
         }
         
-        $updateData = array (
-            'id' => $this->id,
-            'description' => $this->description
-        );
-        
-        $constrains = new Assert\Collection(array(
-            'id' => new Assert\NotBlank(),
-            'description' => array(
-                new Assert\NotBlank(),
-                new Assert\Length(array(
-                    'min' => 50
-                ))
-            )
-        ));
-        
-            $errors = $this->app['validator']->validate($updateData, $constrains);
-
-            $errorCode = '';
-
-            $response = array(
-                'status' => 0,
-                'message' => 'Error'
-            );
-            if (count($errors)>0){
-                foreach ($errors as $error){
-                    $errorCode .= $error->getPropertyPath().' '.$error->getMessage();
-                }
-                $response['status'] = 0;
-                $response['message'] = $errorCode;
-            }else{
-                $entityManager = $this->app['orm.em'];
-        
-                $article = $entityManager->find('src\MyApp\Entity\Article', $id);        
-                $article->setDescription($updateData['description']);
-
-                $entityManager->persist($article);
-                $entityManager->flush();
-                
-                $response['status'] = 1;
-                $response['message'] = 'Article '.$id. 'Was Updated!';
-            }
-        return json_encode($response);
+        return $this->articleModel->updateArtikel($this->app, $id, $this->description);
     }
 
-    public function destroy($id){
-        
-        if ($id != ''){
-            $entityManager = $this->app['orm.em'];
-
-            $comments = $entityManager->createQueryBuilder()
-                    ->select('comment')
-                    ->from('src\MyApp\Entity\Comment', 'comment')
-                    ->where('comment.article = :id ')
-                    ->setParameter('id', $id)
-                    ->getQuery()
-                    ->execute();
-
-            foreach ($comments as $comment){
-                    $entityManager->remove($comment);
-                    $entityManager->flush();
-            }
-
-            $article = $entityManager->find('src\MyApp\Entity\Article', $id);
-            $entityManager->remove($article);
-            $entityManager->flush();
-            
-            return '1';
-        }else{
-            return '0';
-        }
+    public function destroy($id)
+    {
+        return $this->articleModel->deleteArtikel($this->app, $id);
     }
 }
 /* 

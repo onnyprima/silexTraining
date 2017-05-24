@@ -79,16 +79,15 @@
                                 type: 'PUT',
                                 data: { data: data },
                                 success: function(msg){
-                                    var x=JSON.parse(msg);
-                                    if (x.status == 1){
+                                    if (msg.status == 1){
                                         Lobibox.notify('success', {
-                                            msg: x.message,
+                                            msg: msg.message,
                                             sound: false
                                         });
                                         getArticle();
                                     } else {
                                         Lobibox.notify('error', {
-                                            msg: x.message,
+                                            msg: msg.message,
                                             sound: false
                                         });
                                     }                                    
@@ -221,12 +220,11 @@
             e.preventDefault();
             var data=$('#formNewArticle').serialize();
             $.post('http://localhost/blog/public/articles/', data, function(msg){
-                data = JSON.parse(msg);
-                if (data.status == 1){
-                    sukses(data.message);
+                if (msg.status == 1){
+                    sukses(msg.message);
                     getArticle();
                 }else{
-                    error(data.message);
+                    error(msg.message);
                 }                
             });
         });
