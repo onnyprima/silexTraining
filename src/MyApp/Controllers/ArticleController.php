@@ -27,7 +27,53 @@ class ArticleController {
     {
         return $this->articleModel->allArticle($this->app);        
     }
+    
+    public function store(){
+        
+        if (isset($_POST['description'])){
+            $this->description = $_POST['description'];
+        }
+        $newArticle = array (
+            'description' => $this->description
+        );        
+        
+        return $this->articleModel->saveArticle($this->app, $newArticle);        
+    }
+    
+    public function update($id){
+        
+        $this->id = $id;
+        parse_str(file_get_contents("php://input"),$post_vars);
+        
+        if (isset($post_vars['data'])){
+            $this->description = $post_vars['data'];
+        }
+        
+        return $this->articleModel->updateArtikel($this->app, $id, $this->description);
+    }
 
+    public function destroy($id)
+    {
+        return $this->articleModel->deleteArtikel($this->app, $id);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 //<<<<<<< HEAD
     public function fungsiCabangMalang()
     {
@@ -63,34 +109,7 @@ class ArticleController {
         return $id;
     }
 
-    public function store(){
-        
-        if (isset($_POST['description'])){
-            $this->description = $_POST['description'];
-        }
-        $newArticle = array (
-            'description' => $this->description
-        );        
-        
-        return $this->articleModel->saveArticle($this->app, $newArticle);        
-    }
     
-    public function update($id){
-        
-        $this->id = $id;
-        parse_str(file_get_contents("php://input"),$post_vars);
-        
-        if (isset($post_vars['data'])){
-            $this->description = $post_vars['data'];
-        }
-        
-        return $this->articleModel->updateArtikel($this->app, $id, $this->description);
-    }
-
-    public function destroy($id)
-    {
-        return $this->articleModel->deleteArtikel($this->app, $id);
-    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.
