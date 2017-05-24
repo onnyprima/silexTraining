@@ -1,43 +1,29 @@
 <?php
-namespace src\MyApp\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+namespace src\MyApp\Entity;
 
 /**
  * Article
- *
- * @ORM\Table(name="articles")
- * @ORM\Entity
  */
 class Article
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="description", type="text", precision=0, scale=0, nullable=false, unique=false)
      */
     private $description;
 
     /**
-     *
-     * @var type string
-     * 
-     * @ORM\Column(name="image_url", type="string")
+     * @var string
      */
     private $image_url;
+
     /**
      * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="src\MyApp\Entity\comment", mappedBy="article")
      */
     private $comments;
 
@@ -69,7 +55,7 @@ class Article
     public function setDescription($description)
     {
         $this->description = $description;
-
+    
         return $this;
     }
 
@@ -83,41 +69,6 @@ class Article
         return $this->description;
     }
 
-    /**
-     * Add comment
-     *
-     * @param \src\MyApp\Entity\comment $comment
-     *
-     * @return Article
-     */
-    public function addComment(\src\MyApp\Entity\comment $comment)
-    {
-        $comment->setArticle($this);
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \src\MyApp\Entity\comment $comment
-     */
-    public function removeComment(\src\MyApp\Entity\comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-    
     /**
      * Set imageUrl
      *
@@ -142,5 +93,38 @@ class Article
         return $this->image_url;
     }
 
+    /**
+     * Add comment
+     *
+     * @param \src\MyApp\Entity\comment $comment
+     *
+     * @return Article
+     */
+    public function addComment(\src\MyApp\Entity\comment $comment)
+    {
+        $this->comments[] = $comment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param \src\MyApp\Entity\comment $comment
+     */
+    public function removeComment(\src\MyApp\Entity\comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }
 

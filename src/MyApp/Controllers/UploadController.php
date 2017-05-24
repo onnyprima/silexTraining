@@ -17,14 +17,14 @@ class UploadController {
     public function saveData()
     {
         error_reporting(E_ALL | E_STRICT);
-        $upload_handler = new \src\MyApp\Library\uploader\UploadHandler();
+        $upload_handler = new UploadHandler();
         sleep(3);
         return '';
     }
     public function destroy()
     {
         error_reporting(E_ALL | E_STRICT);
-        $upload_handler = new \src\MyApp\Library\uploader\UploadHandler();
+        $upload_handler = new UploadHandler();
         
         return '';
     }

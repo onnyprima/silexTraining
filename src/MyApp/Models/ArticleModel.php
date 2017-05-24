@@ -2,6 +2,7 @@
 namespace src\MyApp\Models;
 
 use Silex\Application;
+use Symfony\Component\HttpFoundation\JsonResponse as Response;
 
 class ArticleModel {
     
@@ -19,14 +20,14 @@ class ArticleModel {
                 'description' => $article->getDescription()
             );
         }
-        header('Content-Type:application/json');
-        return json_encode($all);    
+        return new Response($all); 
     }
     
     public function saveArticle(Application $app, $description)
     {
         $article = new \src\MyApp\Entity\Article();
         $article->setDescription($description);
+        $article->setImageUrl('sjadhkahsdkjhkjasd.jpg');
         $entityManager = $app['orm.em'];
 
         $entityManager->persist($article);

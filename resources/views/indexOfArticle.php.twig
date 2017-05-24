@@ -205,10 +205,10 @@
         function getArticle()
         {
             $.get('http://localhost/blog/public/articles/allArticle', function(msg){
-                x = JSON.parse(msg);
-                html = '';
-                $.each(x, function(k, v){
-                    html += articleLayout(x[k].id, x[k].description);
+                //x = JSON.parse(msg);
+                var html = '';
+                $.each(msg, function(k, v){
+                    html += articleLayout(msg[k].id, msg[k].description);
                 });
                 $('#articleContent').empty();
                 $('#articleContent').append(html).html();

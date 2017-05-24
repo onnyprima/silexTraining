@@ -12,7 +12,6 @@ class ArticleProvider implements ControllerProviderInterface{
         $controllers = $app["controllers_factory"];
         
         $app['controller.index'] = function() use ($app) {
-            //print_r($app);
             return new ArticleController($app);
         };
            
