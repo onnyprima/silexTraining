@@ -18,7 +18,7 @@ class UploadController {
     {
         error_reporting(E_ALL | E_STRICT);
         $upload_handler = new \src\MyApp\Library\uploader\UploadHandler();
-        
+        sleep(3);
         return '';
     }
     public function destroy()

@@ -11,15 +11,15 @@ class UploadProvider implements ControllerProviderInterface{
     {
         $controllers = $app["controllers_factory"];
         
-        $app['controller.index'] = function() use ($app) {
+        $app['controller.upload'] = function() use ($app) {
             return new UploadController($app);
         };
            
-        $controllers->get("/", "controller.index:index");
+        $controllers->get("/", "controller.upload:index");
         
-        $controllers->match("/server/php", "controller.index:saveData");
+        $controllers->match("/server/php", "controller.upload:saveData");
 
-        $controllers->delete("/delete", "controller.index:destroy"); 
+        $controllers->delete("/delete", "controller.upload:destroy"); 
 
         return $controllers;
     }
