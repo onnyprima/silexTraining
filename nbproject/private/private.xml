@@ -3,15 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Library/uploader/UploadHandler.php</file>
-            <file>file:/C:/xampp/htdocs/blog/public/index.php</file>
-            <file>file:/C:/xampp/htdocs/blog/public/js/main.js</file>
-            <file>file:/C:/xampp/htdocs/blog/resources/views/uploader.php</file>
+            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Models/ArticleModel.php</file>
             <file>file:/C:/xampp/htdocs/blog/src/MyApp/Controllers/ArticleController.php</file>
-            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Controllers/Provider/UploadProvider.php</file>
-            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Controllers/Provider/ArticleProvider.php</file>
-            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Controllers/UploadController.php</file>
-            <file>file:/C:/xampp/htdocs/blog/src/MyApp/Library/uploader/index.php</file>
             <file>file:/C:/xampp/htdocs/blog/resources/views/indexOfArticle.php.twig</file>
         </group>
     </open-files>

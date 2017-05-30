@@ -21,17 +21,14 @@ class ArticleModel {
                 'description' => $article->getDescription()
             );
         }
-        return new Response($all); 
+        return json_encode($all);
     }
     
     public function saveArticle(Application $app, $description)
-    {
-        
+    {        
         $constraint = new \Symfony\Component\Validator\Constraints\Collection(array(
             'description' => array(
-                new \Symfony\Component\Validator\Constraints\Length(array('min'=> 50),
-                new \Symfony\Component\Validator\Constraints\NotBlank()        
-                        )
+                new \Symfony\Component\Validator\Constraints\Length(array('min'=> 50)                        )
                 )
         ));
         
@@ -57,14 +54,7 @@ class ArticleModel {
             $entityManager->flush();
             $message['message'] = 'Transaksi Berhasil !';            
         }
-        
-        $pesan = array(
-            'status' => 0,
-            'message' => 'This value is too short. It should have 50 characters or more.'
-        );
-        
-        return new Response($message)
-        ;        
+        return json_encode($message);        
     }
     public function updateArtikel(Application $app, $id, $description)
     {
@@ -100,16 +90,34 @@ class ArticleModel {
             }else{
                 $entityManager = $app['orm.em'];
         
-                $article = $entityManager->find('src\MyApp\Entity\Article', $id);        
-                $article->setDescription($updateData['description']);
-
-                $entityManager->persist($article);
-                $entityManager->flush();
+                $article = $entityManager->find('src\MyApp\Entity\Article', $id);
                 
-                $response['status'] = 1;
-                $response['message'] = 'Article '.$id. 'Was Updated!';
+                if ($article == NULL){
+                    $response['status'] = 0;
+                    $response['message'] = 'Not Found';
+                }else{
+                    $article->setDescription($updateData['description']);
+
+                    $entityManager->persist($article);
+                    $entityManager->flush();
+
+                    $response['status'] = 1;
+                    $response['message'] = 'Article '.$id. 'Was Updated!';
+                }
+                //$article = $entityManager->createQueryBuilder()
+                //        ->select('article')
+                //        ->from('src\MyApp\Entity\Article', 'article')
+                //        ->where('article.id = :id')
+                //        ->setParameter('id', $id)
+                //        ->getQuery()
+                //        ->execute();
+                //var_dump($article->getDescription());
+                //foreach ($article as $row){
+                //    var_dump($article);
+                //    var_dump($row->getDescription());
+                //}
             }
-        return new Response($response);
+        return json_encode($response);
     }
     public function deleteArtikel(Application $app, $id)
     {

@@ -6,6 +6,7 @@ require '../src/MyApp/Models/ArticleModel.php';
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use Silex\Application;
 use src\MyApp\Controllers\ArticleController;
+use src\MyApp\Models\ArticleModel;
 
 class blogTest extends \PHPUnit_Framework_TestCase
 {
@@ -58,38 +59,50 @@ class blogTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
+        
     }
 
-    // tests
     public function testfunctionFromCabangSurabaya()
     {
         $test = new ArticleController($this->app);        
         $this->assertFalse($test->functionFromCabangSurabaya());        
     }
     
-    public function testGetAllArticle()
+    public function testGetAllArticle() 
     {
-        $articles = new ArticleController($this->app);
-        $this->assertJson($articles->getAllArticle());
+        $articles = new ArticleModel();
+        $data = '[{"id":61,"description":"Dalam babak final yang digelar di Carrara Indoor Stadium, Minggu (28\/5\/2017), Korea berhasil mengalahkan China 3-2. Padahal menilik skuat yang dibawa, Korea didominasi pemain muda termasuk tunggal putra Jeon Hyeok Jin (21 tahun) serta Choi Solgyu (21 tahun) dan Chae Yoo Jung (22 tahun). "},{"id":62,"description":"Choi Solgyu\/Chae Yoo Jung yang ada di urutan ke-14 dunia mampu tampil tenang menghadapi ganda campuran China, Lu Kai\/Huang Yaqiong, dengan skor 21-17, 21-13 sekaligus memastikan juara untuk Korea. "}]';
+        $this->assertJsonStringEqualsJsonString($data, $articles->allArticle($this->app));
     }
     
-    public function testStore()
+    public function testPenyimpananGagalKarenaDeskripsiJumlahCharakterKurang()
     {
         $articles = new ArticleController($this->app);
-        $articles->description = "Test";
-        $this->assertJson($articles->store());
+        $errorResponse = '{"status":0,"message":"[description] This value is too short. It should have 50 characters or more."}';
+        $articles->description = "Test data";
+        $this->assertJsonStringEqualsJsonString($errorResponse, $articles->store());
     }
     
-    public function testUpdate()
+    public function testUpdateGagalKarenaIdTidakDitemukan()
     {
         $article = new ArticleController($this->app);
-        $article->description = "Test Update";
-        $this->assertJson($article->update('65'));
+        $article->description = "Test Update ashkdkjhaskjdh aksjhdjkashjkdhkjahsd aksjhdjkahsdkhajshd ashdjahsjdkhaksdh asjhdjahskjdhkashd";
+        $constraint = '{"status":0,"message":"Not Found"}';
+        $this->assertJsonStringEqualsJsonString($constraint, $article->update('65')); //ID 65 tidak ada di database
     }
     
-    public function testDeleteArticle()
+    public function testUpdateBerhasil()
+    {
+        $article = new ArticleController($this->app);
+        $article->description = "Dalam babak final yang digelar di Carrara Indoor Stadium, Minggu (28/5/2017), Korea berhasil mengalahkan China 3-2. Padahal menilik skuat yang dibawa, Korea didominasi pemain muda termasuk tunggal putra Jeon Hyeok Jin (21 tahun) serta Choi Solgyu (21 tahun) dan Chae Yoo Jung (22 tahun). ";
+        $constraint = '{"status":1,"message":"Article 61Was Updated!"}';
+        $this->assertJsonStringEqualsJsonString($constraint, $article->update('61')); //ID 65 ada di database
+    }
+    
+    public function testDeleteArticleById()
     {
         $article = new ArticleController($this->app);
         $this->assertContains('0', [$article->destroy('')]); //jika id kosong
+        $this->assertContains('1', [$article->destroy(71)]); //jika id ada
     }
 }

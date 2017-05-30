@@ -79,6 +79,7 @@
                                 type: 'PUT',
                                 data: { data: data },
                                 success: function(msg){
+                                    var msg = JSON.parse(msg);
                                     if (msg.status == 1){
                                         Lobibox.notify('success', {
                                             msg: msg.message,
@@ -204,10 +205,10 @@
         function getArticle()
         {
             $.get('http://localhost/blog/public/articles/allArticle', function(msg){
-                //x = JSON.parse(msg);
+                x = JSON.parse(msg);
                 var html = '';
-                $.each(msg, function(k, v){
-                    html += articleLayout(msg[k].id, msg[k].description);
+                $.each(x, function(k, v){
+                    html += articleLayout(x[k].id, x[k].description);
                 });
                 $('#articleContent').empty();
                 $('#articleContent').append(html).html();
@@ -220,11 +221,13 @@
             e.preventDefault();
             var data=$('#formNewArticle').serialize();
             $.post('http://localhost/blog/public/articles/', data, function(msg){
+                var msg = JSON.parse(msg);
                 if (msg.status == 1){
                     sukses(msg.message);
                     getArticle();
                 }else{
                     error(msg.message);
+                    getArticle();
                 }                
             });
         });

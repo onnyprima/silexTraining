@@ -28,6 +28,8 @@ class ArticleProvider implements ControllerProviderInterface{
         $controllers->put("/{id}", "controller.index:update");
 
         $controllers->delete("/{id}", "controller.index:destroy"); 
+        
+        $controllers->get("/stream/{id}", "controller.index:stream");
 
         return $controllers;
     }

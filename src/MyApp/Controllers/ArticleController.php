@@ -3,6 +3,7 @@ namespace src\MyApp\Controllers;
 
 use Silex\Application;
 use src\MyApp\Models\ArticleModel;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ArticleController {
 
@@ -25,6 +26,10 @@ class ArticleController {
     
     public function getAllArticle()
     {
+        //$fp = fopen('results.json', 'w');
+        //fwrite($fp, $this->articleModel->allArticle($this->app));
+        //fclose($fp);
+        //return '';
         return $this->articleModel->allArticle($this->app);        
     }
     
@@ -57,7 +62,10 @@ class ArticleController {
         return $this->articleModel->deleteArtikel($this->app, $id);
     }
     
-    
+    public function stream($id)
+    {
+        return $id;
+    }
     
     
     
