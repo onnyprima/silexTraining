@@ -7,6 +7,9 @@ use src\MyApp\Controllers\ArticleController;
 
 class ArticleProvider implements ControllerProviderInterface{
 
+    public function __construct() {
+    }
+    
     public function connect(Application $app)
     {
         $controllers = $app["controllers_factory"];

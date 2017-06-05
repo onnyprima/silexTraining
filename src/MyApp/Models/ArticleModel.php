@@ -7,6 +7,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ArticleModel {
     
+    public function __construct() {
+    }
+    
     public function allArticle(Application $app)
     {
         $entityManager = $app['orm.em'];
@@ -15,21 +18,23 @@ class ArticleModel {
                 ->from('src\MyApp\Entity\Article', 'article')
                 ->getQuery()
                 ->execute();
+        $all = array();
         foreach ($articles as $article){
-            $all [] = array(
+            array_push($all, array(
                 'id' => $article->getId(),
                 'description' => $article->getDescription()
-            );
+            ));
         }
         return json_encode($all);
     }
     
     public function saveArticle(Application $app, $description)
     {        
-        $constraint = new \Symfony\Component\Validator\Constraints\Collection(array(
-            'description' => array(
-                new \Symfony\Component\Validator\Constraints\Length(array('min'=> 50)                        )
-                )
+        $constraint = new Assert\Collection(array(
+            "description" => array(
+                new Assert\NotBlank(),
+                new Assert\Length(array('min' => 50))
+            )
         ));
         
         $errors = $app['validator']->validate($description, $constraint);
@@ -47,12 +52,13 @@ class ArticleModel {
         }else{            
             $article = new \src\MyApp\Entity\Article();
             $article->setDescription($description['description']);
-            $article->setImageUrl('sjadhkahsdkjhkjasd.jpg');
+            $article->setImageUrl('test.jpg');
             $entityManager = $app['orm.em'];
-
+                        
             $entityManager->persist($article);
             $entityManager->flush();
-            $message['message'] = 'Transaksi Berhasil !';            
+            
+            $message['message'] = 'Transaksi Berhasil';            
         }
         return json_encode($message);        
     }
@@ -121,7 +127,7 @@ class ArticleModel {
     }
     public function deleteArtikel(Application $app, $id)
     {
-        if ($id != ''){
+        if ($id != NULL){
             $entityManager = $app['orm.em'];
 
             $comments = $entityManager->createQueryBuilder()

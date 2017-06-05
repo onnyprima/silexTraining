@@ -38,6 +38,7 @@ class ArticleController {
         if (isset($_POST['description'])){
             $this->description = $_POST['description'];
         }
+        
         $newArticle = array (
             'description' => $this->description
         );        

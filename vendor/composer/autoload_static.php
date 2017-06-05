@@ -67,6 +67,10 @@ class ComposerStaticInit6f90734627ba8dbad79ebb7c916477a9
         array (
             'MyEntity\\' => 9,
         ),
+        'J' => 
+        array (
+            'JDesrosiers\\Silex\\Provider\\' => 27,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -211,6 +215,10 @@ class ComposerStaticInit6f90734627ba8dbad79ebb7c916477a9
         'MyEntity\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/MyApp/Entity',
+        ),
+        'JDesrosiers\\Silex\\Provider\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jdesrosiers/silex-cors-provider/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

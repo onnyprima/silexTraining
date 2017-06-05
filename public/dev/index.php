@@ -1,5 +1,6 @@
 <?php
-$loader = require __DIR__.'/../vendor/autoload.php';
+
+$loader = require __DIR__.'/../../vendor/autoload.php';
 $baseDir = __DIR__.'/../';
 use Dflydev\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use MyEntity\Foo;
@@ -14,7 +15,7 @@ use src\MyApp\Library\uploader\UploadHandler;
 $app = new Silex\Application();
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/../resources/views',
+    'twig.path' => __DIR__.'/../../resources/views',
 ));
 
 $app->register(new \Silex\Provider\ValidatorServiceProvider());
@@ -28,7 +29,7 @@ $app->register(
             'db.options' => [
                 'driver' => 'pdo_mysql',
                 'host' => 'localhost',
-                'dbname' => 'db_silexorm',
+                'dbname' => 'db_silexormDevelopment',
                 'user' => 'user',
                 'password' => '1234',
                 'charset' => 'utf8',
@@ -54,9 +55,8 @@ $app->register(new DoctrineOrmServiceProvider(), [
     ]
 ]);
 
-
 $app->get("/", function(){
-    return '<a href="articles">Beranda Production</a>';
+    return '<a href="articles">Beranda Development</a>';
 });
 
 $app->mount("/articles", new ArticleProvider());

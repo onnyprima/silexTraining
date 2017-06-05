@@ -11,20 +11,24 @@ class CommentProvider implements ControllerProviderInterface{
     public function connect(Application $app)
     {
         $controllers = $app["controllers_factory"];
-
-        $controllers->get("/", "src\\MyApp\\Controllers\\CommentController::index");
         
-        $controllers->get("/commentsBy", "src\\MyApp\\Controllers\\CommentController::getAllCommentBy");
+        $app['controller.comments'] = function() use ($app) {
+            return new \src\MyApp\Controllers\CommentController($app);
+        };
+
+        $controllers->get("/", "controller.comments:index");
         
-        $controllers->post("/", "src\\MyApp\\Controllers\\CommentController::store");
+        $controllers->get("/commentsBy", "controller.comments:getAllCommentBy");
+        
+        $controllers->post("/", "controller.comments:store");
 
-        $controllers->get("/{id}", "src\\MyApp\\Controllers\\CommentController::show");
+        $controllers->get("/{id}", "controller.comments:show");
 
-        $controllers->get("/edit/{id}", "src\\MyApp\\Controllers\\CommentController::edit");
+        $controllers->get("/edit/{id}", "controller.comments:edit");
 
-        $controllers->put("/{id}", "src\\MyApp\\Controllers\\CommentController::update");
+        $controllers->put("/{id}", "controller.comments:update");
 
-        $controllers->delete("/{id}", "src\\MyApp\\Controllers\\CommentController::destroy"); 
+        $controllers->delete("/{id}", "controller.comments:destroy"); 
 
         return $controllers;
     }

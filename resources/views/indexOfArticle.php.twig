@@ -75,7 +75,7 @@
             e.preventDefault();
             var data=$('#desc_id').val(), key=$('#article_id').val();
             $.ajax({
-                                url: 'http://localhost/blog/public/articles/'+key,
+                                url: ''+key,
                                 type: 'PUT',
                                 data: { data: data },
                                 success: function(msg){
@@ -139,7 +139,7 @@
         $(document).on('click','.comments',function(){
             var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
             $('#com_'+key).collapse('toggle');
-            $.get('http://localhost/blog/public/comments/commentsBy?id='+key, function(msg){
+            $.get('/comments/commentsBy?id='+key, function(msg){
                 var x = JSON.parse(msg);
                 var html='';
                 $.each(x, function(k,v){
@@ -162,7 +162,7 @@
                     callback: function ($this, type) {
                         if (type === 'yes') {
                             $.ajax({
-                                url: 'http://localhost/blog/public/articles/'+key,
+                                url: '/articles/'+key,
                                 type: 'DELETE',
                                 success: function(msg){
                                     if (msg == '1'){
@@ -192,7 +192,7 @@
             e.preventDefault();
             var id=$(this).attr('id'), ids=id.split('_'), key=ids[1];
             var description=$('#addComment_'+key).val();
-            $.post('http://localhost/blog/public/comments/', { idArt: key, description: description}, function(msg){
+            $.post('/comments/', { idArt: key, description: description}, function(msg){
                 var x = JSON.parse(msg);
                 if (x.status == 1){
                     $('#listComment_'+key).append(x.description).show('slow');
@@ -204,7 +204,7 @@
         });
         function getArticle()
         {
-            $.get('http://localhost/blog/public/articles/allArticle', function(msg){
+            $.get('allArticle', function(msg){
                 x = JSON.parse(msg);
                 var html = '';
                 $.each(x, function(k, v){
@@ -220,7 +220,7 @@
         $('#formNewArticle').on('submit', function(e){
             e.preventDefault();
             var data=$('#formNewArticle').serialize();
-            $.post('http://localhost/blog/public/articles/', data, function(msg){
+            $.post('', data, function(msg){
                 var msg = JSON.parse(msg);
                 if (msg.status == 1){
                     sukses(msg.message);
